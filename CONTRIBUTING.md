@@ -1,61 +1,58 @@
-# Contributing to PAYKIT-GO
+# Contributing to paykit-go
 
-First off, thank you for considering contributing to PAYKIT-GO! 🎉
+First off, thank you for considering contributing to **paykit-go**! 🎉
 
-This project aims to provide a unified Go library for integrating Kenyan payment providers such as M-Pesa, Airtel Money, Pesapal, Flutterwave, and others.
-
-We welcome contributions of all kinds, including:
-
-- Bug fixes
-- New payment provider integrations
-- Documentation improvements
-- Tests
-- Performance improvements
-- Feature requests
+Our goal is to build a production-ready Go SDK that provides a unified interface for integrating African payment providers such as M-Pesa, Airtel Money, and Pesapal. Every contribution—whether it's code, documentation, bug reports, or feature suggestions—is appreciated.
 
 ## Getting Started
 
-### Fork the Repository
+### 1. Fork the Repository
 
-Fork the repository and clone your fork:
+Fork the repository to your GitHub account and clone it locally.
 
 ```bash
 git clone https://github.com/<your-username>/paykit-go.git
 cd paykit-go
 ```
 
-### Create a Branch
-
-Create a new branch for your changes:
+Add the upstream repository:
 
 ```bash
-git checkout -b feature/my-feature
+git remote add upstream https://github.com/Flying-Tea-Squad/paykit-go.git
 ```
 
-Examples:
+### 2. Create a Branch
+
+Create a new branch from `main`.
 
 ```bash
-git checkout -b feature/airtel-money
-git checkout -b fix/stk-push-timeout
-git checkout -b docs/update-readme
+git checkout -b feat/my-feature
 ```
+
+Branch naming examples:
+
+* `feat/stk-push`
+* `fix/token-cache`
+* `docs/update-readme`
+* `test/mpesa-client`
 
 ## Development Setup
 
-Install Go:
+Ensure you have:
 
-- Go 1.25 or newer is recommended.
-
-Verify installation:
-
-```bash
-go version
-```
+* Go 1.24 or later
+* Git
 
 Download dependencies:
 
 ```bash
 go mod tidy
+```
+
+Run formatting:
+
+```bash
+go fmt ./...
 ```
 
 Run tests:
@@ -64,145 +61,258 @@ Run tests:
 go test ./...
 ```
 
-## Coding Standards
+## Project Structure
 
-Please follow these guidelines:
-
-### Formatting
-
-Format code before committing:
-
-```bash
-go fmt ./...
+```
+paykit-go/
+├── gateway/          # Provider registry
+├── bogus/            # Test gateway implementation
+├── mpesa/            # M-Pesa provider
+├── airtelmoney/      # Airtel Money provider
+├── pesapal/          # Pesapal provider
+├── callback/         # Shared callback utilities
+├── driver/           # Import all providers
+└── docs/             # Project documentation
 ```
 
-### Static Analysis
+Each provider should be self-contained and implement the shared gateway interfaces defined by the root package.
 
-Run:
+## Coding Guidelines
 
-```bash
-go vet ./...
-```
-
-### Naming
-
-- Use clear and descriptive names.
-- Exported functions must include comments.
-- Keep APIs simple and idiomatic.
-
-Example:
-
-```go
-// STKPush initiates an M-Pesa STK push request.
-func (c *Client) STKPush(req STKRequest) error {
-    // ...
-}
-```
-
-## Adding a New Payment Provider
-
-Payment providers should live under:
-
-```text
-providers/
-├── mpesa/
-├── airtelmoney/
-├── pesapal/
-└── flutterwave/
-```
-
-A provider implementation should include:
-
-- Authentication
-- Payment requests
-- Transaction status checks
-- Error handling
-- Tests
-- Documentation
+* Follow standard Go formatting (`go fmt`).
+* Write clear, idiomatic Go code.
+* Keep functions small and focused.
+* Avoid unnecessary abstractions.
+* Prefer composition over inheritance.
+* Add comments for exported types and functions.
 
 ## Testing
 
-All new functionality should include tests.
+Every new feature or bug fix should include tests whenever practical.
 
-Run all tests:
+Run all tests before submitting a pull request:
 
 ```bash
 go test ./...
 ```
 
-Run with coverage:
-
-```bash
-go test -cover ./...
-```
-
-## Documentation
-
-If you add a new feature:
-
-- Update README.md
-- Add usage examples
-- Document exported functions
-
-Good documentation helps adoption.
+Fixtures for provider responses should be placed inside each provider's `fixtures/` directory.
 
 ## Commit Messages
 
-Use descriptive commit messages.
+This project follows the Conventional Commits specification.
 
 Examples:
 
-```text
-feat: add mpesa stk push support
-fix: handle oauth token expiration
-docs: update installation instructions
-test: add stk push unit tests
+```
+feat(mpesa): add OAuth token caching
+fix(callback): validate callback signature
+docs: update contributing guide
+test(mpesa): add stk push fixtures
+refactor(http): simplify retry logic
+chore: initialize project structure
 ```
 
 ## Pull Requests
 
-Before opening a pull request:
+Before opening a Pull Request, make sure:
 
-- Ensure tests pass.
-- Ensure code is formatted.
-- Update documentation if necessary.
-- Keep pull requests focused on a single change.
+* Your branch is up to date with `main`.
+* Your code is formatted.
+* All tests pass.
+* New functionality includes tests where appropriate.
+* Documentation has been updated if necessary.
 
-When creating a PR:
+Your Pull Request should include:
 
-1. Describe the change.
-2. Explain why it is needed.
-3. Include screenshots or logs if applicable.
-4. Reference related issues.
+* A short description of the change.
+* The motivation behind it.
+* Screenshots or logs if applicable.
+* A reference to the related issue (e.g. `Closes #12`).
 
-## Reporting Bugs
+## Reporting Issues
 
-Please open an issue and include:
+When opening an issue, please include:
 
-- Go version
-- Operating system
-- Steps to reproduce
-- Expected behavior
-- Actual behavior
+* A clear description of the problem.
+* Steps to reproduce.
+* Expected behavior.
+* Actual behavior.
+* Go version.
+* Operating system.
 
-## Feature Requests
+## Adding a New Payment Provider
 
-Feature requests are welcome.
+Each provider should:
 
-When opening a feature request, include:
-
-- Use case
-- Proposed API
-- Expected behavior
+* Live in its own package.
+* Implement the shared gateway interface.
+* Handle provider-specific authentication internally.
+* Normalize responses into the common `Response` type.
+* Include fixtures and tests.
+* Document any provider-specific configuration.
 
 ## Code of Conduct
 
-Be respectful and constructive.
+Please be respectful and constructive in all interactions. We welcome contributors of all experience levels and strive to maintain a friendly, collaborative environment.
 
-We are committed to providing a welcoming environment for everyone regardless of experience level.
+Happy coding! 🚀
+# Contributing to paykit-go
 
-## Questions
+First off, thank you for considering contributing to **paykit-go**! 🎉
 
-If you have questions, open a discussion or issue and we will be happy to help.
+Our goal is to build a production-ready Go SDK that provides a unified interface for integrating African payment providers such as M-Pesa, Airtel Money, and Pesapal. Every contribution—whether it's code, documentation, bug reports, or feature suggestions—is appreciated.
 
-Thank you for contributing to PAYKIT-GO! 🚀
+## Getting Started
+
+### 1. Fork the Repository
+
+Fork the repository to your GitHub account and clone it locally.
+
+```bash
+git clone https://github.com/<your-username>/paykit-go.git
+cd paykit-go
+```
+
+Add the upstream repository:
+
+```bash
+git remote add upstream https://github.com/Flying-Tea-Squad/paykit-go.git
+```
+
+### 2. Create a Branch
+
+Create a new branch from `main`.
+
+```bash
+git checkout -b feat/my-feature
+```
+
+Branch naming examples:
+
+* `feat/stk-push`
+* `fix/token-cache`
+* `docs/update-readme`
+* `test/mpesa-client`
+
+## Development Setup
+
+Ensure you have:
+
+* Go 1.24 or later
+* Git
+
+Download dependencies:
+
+```bash
+go mod tidy
+```
+
+Run formatting:
+
+```bash
+go fmt ./...
+```
+
+Run tests:
+
+```bash
+go test ./...
+```
+
+## Project Structure
+
+```
+paykit-go/
+├── gateway/          # Provider registry
+├── bogus/            # Test gateway implementation
+├── mpesa/            # M-Pesa provider
+├── airtelmoney/      # Airtel Money provider
+├── pesapal/          # Pesapal provider
+├── callback/         # Shared callback utilities
+├── driver/           # Import all providers
+└── docs/             # Project documentation
+```
+
+Each provider should be self-contained and implement the shared gateway interfaces defined by the root package.
+
+## Coding Guidelines
+
+* Follow standard Go formatting (`go fmt`).
+* Write clear, idiomatic Go code.
+* Keep functions small and focused.
+* Avoid unnecessary abstractions.
+* Prefer composition over inheritance.
+* Add comments for exported types and functions.
+
+## Testing
+
+Every new feature or bug fix should include tests whenever practical.
+
+Run all tests before submitting a pull request:
+
+```bash
+go test ./...
+```
+
+Fixtures for provider responses should be placed inside each provider's `fixtures/` directory.
+
+## Commit Messages
+
+This project follows the Conventional Commits specification.
+
+Examples:
+
+```
+feat(mpesa): add OAuth token caching
+fix(callback): validate callback signature
+docs: update contributing guide
+test(mpesa): add stk push fixtures
+refactor(http): simplify retry logic
+chore: initialize project structure
+```
+
+## Pull Requests
+
+Before opening a Pull Request, make sure:
+
+* Your branch is up to date with `main`.
+* Your code is formatted.
+* All tests pass.
+* New functionality includes tests where appropriate.
+* Documentation has been updated if necessary.
+
+Your Pull Request should include:
+
+* A short description of the change.
+* The motivation behind it.
+* Screenshots or logs if applicable.
+* A reference to the related issue (e.g. `Closes #12`).
+
+## Reporting Issues
+
+When opening an issue, please include:
+
+* A clear description of the problem.
+* Steps to reproduce.
+* Expected behavior.
+* Actual behavior.
+* Go version.
+* Operating system.
+
+## Adding a New Payment Provider
+
+Each provider should:
+
+* Live in its own package.
+* Implement the shared gateway interface.
+* Handle provider-specific authentication internally.
+* Normalize responses into the common `Response` type.
+* Include fixtures and tests.
+* Document any provider-specific configuration.
+
+## Code of Conduct
+
+Please be respectful and constructive in all interactions. We welcome contributors of all experience levels and strive to maintain a friendly, collaborative environment.
+
+Happy coding! 🚀
