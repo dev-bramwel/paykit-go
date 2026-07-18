@@ -105,7 +105,7 @@ type BalanceResponse struct {
 }
 
 // QRRequest encapsulates the configuration for creating an M-PESA dynamic QR code.
-type QRRequest struct {
+type DynamicQRRequest struct {
 	IdempotencyKey string `json:"-"`
 	MerchantName   string `json:"MerchantName"`
 	RefNo          string `json:"RefNo"`
@@ -116,7 +116,7 @@ type QRRequest struct {
 }
 
 // QRResponse delivers the synchronous payload containing the base64 image data.
-type QRResponse struct {
+type DynamicQRResponse struct {
 	ResponseCode        string `json:"ResponseCode"`
 	RequestID           string `json:"RequestID"`
 	ResponseDescription string `json:"ResponseDescription"`
