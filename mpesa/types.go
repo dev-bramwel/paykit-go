@@ -14,3 +14,11 @@ type STKPushRequest struct {
 	AccountReference  string `json:"AccountReference"`
 	TransactionDesc   string `json:"TransactionDesc"`
 }
+
+type STKPushResponse struct {
+	MerchantRequestID string `json:"MerchantRequestID"`
+	CheckoutRequestID string `json:"CheckoutRequestID"`
+	ResponseCode      string `json:"ResponseCode"`
+	ResponseDescription string `json:"ResponseDescription"`
+	CustomerMessage   string `json:"CustomerMessage"`
+}
