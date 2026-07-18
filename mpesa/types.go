@@ -53,3 +53,33 @@ type B2CRequest struct {
 	ResultURL string `json:"ResultURL"`
 	Occasion string `json:"Occasion,omitempty"`
 }
+
+type B2CResponse struct {
+	ConversationID string `json:"ConversationID"`
+	OriginatorConversationID string `json:"OriginatorConversationID"`
+	ResponseCode string `json:"ResponseCode"`
+	ResponseDescription string `json:"ResponseDescription"`
+}
+
+type StatusRequest struct {
+	IdempotencyKey         string `json:"-"`
+	Initiator              string `json:"Initiator"`
+	SecurityCredential     string `json:"SecurityCredential"`
+	CommandID              string `json:"CommandID"`
+	TransactionID          string `json:"TransactionID"`
+	OriginalConversationID string `json:"OriginalConversationID"` // Note: The schema explicitly uses 'Original' here
+	PartyA                 string `json:"PartyA"`
+	IdentifierType         string `json:"IdentifierType"`
+	ResultURL              string `json:"ResultURL"`
+	QueueTimeOutURL        string `json:"QueueTimeOutURL"`
+	Remarks                string `json:"Remarks"`
+	Occasion               string `json:"Occasion,omitempty"`
+}
+
+type StatusResponse struct {
+	OriginatorConversationID string `json:"OriginatorConversationID"`
+	ConversationID           string `json:"ConversationID"`
+	ResponseCode             string `json:"ResponseCode"`
+	ResponseDescription      string `json:"ResponseDescription"`
+}
+
