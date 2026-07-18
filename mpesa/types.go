@@ -83,3 +83,42 @@ type StatusResponse struct {
 	ResponseDescription      string `json:"ResponseDescription"`
 }
 
+// BalanceRequest initiates a real-time query of your M-PESA account balances.
+type BalanceRequest struct {
+	IdempotencyKey     string `json:"-"`
+	Initiator          string `json:"Initiator"`
+	SecurityCredential string `json:"SecurityCredential"`
+	CommandID          string `json:"CommandID"` // Must be set to "AccountBalance"
+	PartyA             string `json:"PartyA"`    // The short code of the organization
+	IdentifierType     string `json:"IdentifierType"` // Typically "4" for short codes
+	Remarks            string `json:"Remarks"`
+	QueueTimeOutURL    string `json:"QueueTimeOutURL"`
+	ResultURL          string `json:"ResultURL"`
+}
+
+// BalanceResponse represents Daraja's immediate synchronous acknowledgment.
+type BalanceResponse struct {
+	OriginatorConversationID string `json:"OriginatorConversationID"`
+	ConversationID           string `json:"ConversationID"`
+	ResponseCode             string `json:"ResponseCode"`
+	ResponseDescription      string `json:"ResponseDescription"`
+}
+
+// QRRequest encapsulates the configuration for creating an M-PESA dynamic QR code.
+type QRRequest struct {
+	IdempotencyKey string `json:"-"`
+	MerchantName   string `json:"MerchantName"`
+	RefNo          string `json:"RefNo"`
+	Amount         uint32 `json:"Amount"`
+	TrxCode        string `json:"TrxCode"` // Valid values: BG, WA, PB, SM, SB
+	CPI            string `json:"CPI"`     // Credit Party Identifier (Shortcode, MSISDN, Till)
+	Size           string `json:"Size"`    // Image width/height in pixels
+}
+
+// QRResponse delivers the synchronous payload containing the base64 image data.
+type QRResponse struct {
+	ResponseCode        string `json:"ResponseCode"`
+	RequestID           string `json:"RequestID"`
+	ResponseDescription string `json:"ResponseDescription"`
+	QRCode              string `json:"QRCode"` // Base64 encoded string representing the square QR image
+}
